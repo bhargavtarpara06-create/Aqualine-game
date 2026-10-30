@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Aqualine</title>
+<title>Play Aqualine – Free Water Pipe Puzzle</title>
+<meta name="description" content="Play Aqualine free in your browser: rotate pipes to bring water from one source to every target ball.">
+<!-- PASTE YOUR ADSENSE SITE-VERIFICATION / AdSense CODE HERE (inside head) -->
 <style>
 :root{color-scheme:dark;--bg:#05080d;--panel:#0d141d;--line:#1d2938;--tx:#e8eef7;--mu:#7d8da3;--ac:#2ec4ff;--ac2:#31e0b8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font-family:"Avenir Next","Segoe UI",Roboto,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none;overflow:hidden}
@@ -73,6 +75,7 @@ p.how{color:#b4c2d4;line-height:1.55;font-size:15px;margin:8px 0}
 .mine{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:6px;width:100%;box-sizing:border-box;text-align:center;border-color:var(--ac);background:#0c1b2b;margin:8px 0 0;padding:10px 8px}.mine small{display:block;color:var(--mu);font-size:10px;letter-spacing:.1em}.mine b{font-size:20px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 4px;border-bottom:1px solid var(--line)}.pr small{color:var(--mu);letter-spacing:.08em}
 .cfp{position:absolute;top:-30px;font-size:22px;animation:fall 3.2s linear infinite;pointer-events:none}@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+.in.ta{height:140px;resize:none;line-height:1.45}.cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin:6px 0}.cat{padding:12px 6px;font-size:14px;min-width:0}.cat.on{background:linear-gradient(180deg,#58d6ff,#1aa3e6);color:#04121c}
 .docb{width:100%;flex:1;color:#b4c2d4;font-size:14px;line-height:1.6;padding-bottom:24px;overflow-wrap:anywhere}
 .docb h3{color:var(--tx);font-size:15px;letter-spacing:.04em;margin:18px 0 4px;font-weight:600}.docb p{margin:4px 0}
 @media (prefers-reduced-motion:reduce){.bub{display:none}}
@@ -119,7 +122,7 @@ p.how{color:#b4c2d4;line-height:1.55;font-size:15px;margin:8px 0}
  <div style="font-size:22px;margin:18px 0" id="dT">💧 2/2 TARGETS FILLED</div>
  <div class="card"><div>MOVES <b id="dM">0</b></div><div class="sub" style="margin-top:6px">BEST <span id="dB">0</span></div><div class="sub" id="dP" style="margin-top:8px;color:var(--ac2)"></div></div>
  <button class="btn big" onclick="nextL()">NEXT LEVEL</button>
- <div class="row" style="margin-top:14px"><button class="btn sec" onclick="startLevel()">REPLAY</button><button class="btn sec" onclick="show('home')">HOME</button></div>
+ <div class="row" style="margin-top:14px"><button class="btn sec" onclick="fbGate(startLevel)">REPLAY</button><button class="btn sec" onclick="fbGate(()=>show('home'))">HOME</button></div>
 </section>
 <section id="set" class="scr">
  <div class="top"><button class="ib" onclick="back()">‹</button><h2>SETTINGS</h2><span style="width:42px"></span></div>
@@ -128,6 +131,7 @@ p.how{color:#b4c2d4;line-height:1.55;font-size:15px;margin:8px 0}
   <div class="tg">🎵 Music<button class="sw" id="s_mus" onclick="tg('mus')"></button></div>
   <div class="tg">📳 Vibration<button class="sw" id="s_hap" onclick="tg('hap')"></button></div>
   <div class="tg">Remove ads<span class="sub">Coming soon</span></div>
+  <div class="tg">💬 Feedback &amp; Suggestions<button class="btn sec" style="padding:10px 16px;font-size:13px" onclick="openFb()">OPEN</button></div>
   <div class="tg" id="pnRow" style="display:none">✏️ Player name<button class="btn sec" style="padding:10px 16px;font-size:13px" onclick="openName('set')">CHANGE</button></div>
   <div class="tg" id="accRow" style="display:none">👤 Account<button class="btn sec" id="accBtn" style="padding:10px 16px;font-size:13px" onclick="openAcc()">LOGIN</button></div>
   <div class="tg">📊 Usage statistics<button class="sw" id="s_ana" onclick="tg('ana')"></button></div>
@@ -165,6 +169,25 @@ p.how{color:#b4c2d4;line-height:1.55;font-size:15px;margin:8px 0}
  <button class="btn" style="margin:10px 0" onclick="openName('pf')">CHANGE NAME</button>
 </section>
 <section id="rw" class="scr ovl" style="text-align:center;overflow:hidden"><div id="rwB" style="width:100%"></div></section>
+<section id="fbk" class="scr">
+ <div class="top"><button class="ib" onclick="fbBack()">‹</button><h2 style="font-size:20px">FEEDBACK</h2><span style="width:42px"></span></div>
+ <div class="lst" style="margin-top:10px">
+  <h1 style="font-size:24px;margin:6px 0">Help Us Improve Aqualine</h1>
+  <p class="sub" style="font-size:14px;letter-spacing:0;line-height:1.5">Have a suggestion, found a bug, or have an idea for the game? Tell us!</p>
+  <div class="sub" style="margin:12px 0 2px;font-size:12px">SENDING AS <b id="fbN" style="color:var(--tx)"></b></div>
+  <div class="cats"><button class="btn sec cat on" id="fc_suggestion" onclick="fbCat('suggestion')">💡 Suggestion</button><button class="btn sec cat" id="fc_bug" onclick="fbCat('bug')">🐛 Bug Report</button><button class="btn sec cat" id="fc_gameplay" onclick="fbCat('gameplay')">🎮 Gameplay</button><button class="btn sec cat" id="fc_general" onclick="fbCat('general')">⭐ General Feedback</button></div>
+  <textarea class="in ta" id="fbM" maxlength="1000" placeholder="Tell us what you think…" oninput="fbEdit()"></textarea>
+  <div id="fbS" style="min-height:44px;margin:6px 0;font-size:14px;line-height:1.4;color:var(--ac2)"></div>
+  <button class="btn" id="fbBtn" style="width:100%" onclick="fbSubmit()">Submit Feedback</button>
+ </div>
+</section>
+<section id="fbp" class="scr ovl" style="text-align:center">
+ <div style="font-size:56px">🎉</div><h1 style="font-size:30px;margin:10px 0">Great Job!</h1>
+ <p style="font-size:18px;margin:6px 0">How are you enjoying Aqualine?</p>
+ <p class="sub" style="font-size:14px;letter-spacing:0;line-height:1.5;max-width:300px;margin-bottom:28px">Have a suggestion or found something we can improve?</p>
+ <button class="btn big" onclick="fbPopupShare()">💬 Share Feedback</button>
+ <button class="btn sec" style="margin-top:14px" onclick="fbPopupLater()">Maybe Later</button>
+</section>
 <section id="acc" class="scr">
  <div class="top"><button class="ib" onclick="show('set',prev=='game')">‹</button><h2 style="font-size:22px">ACCOUNT</h2><span style="width:42px"></span></div>
  <div class="docb" id="accB" style="margin-top:14px">
@@ -201,15 +224,16 @@ p.how{color:#b4c2d4;line-height:1.55;font-size:15px;margin:8px 0}
    FIREBASE CONFIGURATION  —  PASTE YOUR FIREBASE VALUES HERE
    (Firebase Console > Project settings > Your apps > Web app > Config)
    ===================================================================== */
-   const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyA4ZAVJbonCRdcgie55T-aJaTjyNDNWcnc",
   authDomain: "aqualine-game.firebaseapp.com",
   projectId: "aqualine-game",
   storageBucket: "aqualine-game.firebasestorage.app",
   messagingSenderId: "51331635880",
-  appId: "1:51331635880:web:f055fa0cf44d8e91b5409d",
+  appId: "1:51331635880:web:f055a0cf44f4d8e91b5409d",
   measurementId: "G-LRQ1CCZ55F"
 };
+const FUNCTIONS_REGION = "us-central1";   // the region you deploy the Cloud Functions to
 const ENABLE_EMAIL_ACCOUNT = false;       // old optional email login; leave false (leaderboard uses anonymous sign-in)
 /* ===================================================================== */
 const $=id=>document.getElementById(id);
@@ -288,7 +312,7 @@ function gen(L){const{w,h,t,d}=cfg(L),n=w*h;
 let G,INV=[],CONN=0,RT=new Float32Array(0),L0=1,moves=0,undoS=[],hints=3,fl,P,ANG,ENT,FILLED,over,fx=[],hintI=-1,hintT=0,run=false,last=0,cs=0,ox=0,oy=0,cwid=0,chei=0,dpr=1,prev='home';
 const PAL=['#2ec4ff','#31e0b8','#5b8cff','#b58cff','#ff8fb1','#ffb454','#6ee7f9','#7be36b'];
 const cv=$('cv'),ctx=cv.getContext('2d'),mk=i=>rm(G.base[i],G.rot[i]);
-function show(id,fromGame){if(id=='set')prev=fromGame?'game':'home';document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id==id));if(id!='game'&&id!='set'&&id!='doc'&&id!='acc'&&id!='nm')tutStop();curScr=id;if(id!='lb'&&id!='pf')Board.close();if(id=='home')Board.maybeRw();if(id!='game')$('tut').style.display='none';run=id=='game';if(run){size();last=performance.now();requestAnimationFrame(frame)}if(id=='home')$('hLv').textContent='LEVEL '+S.cur;sfx('click')}
+function show(id,fromGame){if(id=='set')prev=fromGame?'game':'home';document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id==id));if(id!='game'&&id!='set'&&id!='doc'&&id!='acc'&&id!='nm'&&id!='fbk')tutStop();curScr=id;if(id!='lb'&&id!='pf')Board.close();if(id=='home')Board.maybeRw();if(id!='game')$('tut').style.display='none';run=id=='game';if(run){size();last=performance.now();requestAnimationFrame(frame)}if(id=='home')$('hLv').textContent='LEVEL '+S.cur;sfx('click')}
 function back(){show(prev);if(prev=='game')vib(0)}
 function tg(k){S[k]=S[k]?0:1;save();ui();if(k=='mus')music();if(k=='ana')Analytics.apply()}
 function ui(){['snd','mus','hap','ana'].forEach(k=>$('s_'+k).classList.toggle('on',!!S[k]))}
@@ -314,7 +338,7 @@ cv.addEventListener('pointerdown',e=>{if(!G||over)return;au();const r=cv.getBoun
 function undo(){if(!G||over||!undoS.length)return sfx('err');const i=undoS.pop();G.rot[i]--;moves--;recalc();sfx('rot');hud();tutRefresh()}
 function hint(){if(!G||over)return;const go=()=>{let b=-1;for(let i=0;i<G.base.length;i++)if(G.base[i]&&!G.dec[i]&&mk(i)!=G.base[i]&&(b<0||G.dep[i]<G.dep[b]))b=i;if(b<0)return toast('Looks right. Let the water flow.');hintI=b;hintT=performance.now()/1000+3;sfx('click')};
  if(hints>0){hints--;go();hud();Analytics.log('hint_used',{type:'free'})}else if(tutOn)toast('Try the glowing pipe');else AdsManager.showRewarded(()=>{go();toast('Free hint used');Analytics.log('hint_used',{type:'rewarded'})},()=>{sfx('err');toast('Ad not available')})}
-function nextL(){AdsManager.count++;const go=()=>intro(L0+1);AdsManager.showInterstitial(go)}
+function nextL(){fbGate(()=>{AdsManager.count++;const go=()=>intro(L0+1);AdsManager.showInterstitial(go)})}
 /* ---------- Update & render ---------- */
 function frame(t){if(!run)return;const dt=Math.min(.05,(t-last)/1000);last=t;if(G)update(dt,t/1000);requestAnimationFrame(frame)}
 function update(dt,tm){const n=G.w*G.h;let ch=false;for(const i of stepWater(G,fl,P,ENT,dt))RT[i]=.8;for(let i=0;i<n;i++)if(RT[i]>0)RT[i]=Math.max(0,RT[i]-dt);
@@ -326,7 +350,7 @@ function update(dt,tm){const n=G.w*G.h;let ch=false;for(const i of stepWater(G,f
  if(!over&&isLevelComplete()&&P.every(v=>v>=.999)){over=true;setTimeout(win,900)}
  draw(tm,dt)}
 function win(){if(G.tut){if(tutOn)tutWin();return}sfx('win');vib([30,40,60]);const b=S.done[L0];S.done[L0]=b?Math.min(b,moves):moves;if(S.cur<=L0)S.cur=L0+1;save();Analytics.log('level_complete',{level:L0,moves:moves});
- {const par=parOf(G),pts=100+Math.min(L0,100)+Math.round(100*Math.min(1,par/Math.max(1,moves)));wkEnsure();const pv=S.wk.lv[L0]||0;S.wk.lv[L0]=Math.max(pv,pts);save();$('dP').textContent='+'+Math.max(0,pts-pv)+' pts · WEEK '+wkTotal();checkBadges(par);Board.record(L0,pts)}
+ {const par=parOf(G),pts=100+Math.min(L0,100)+Math.round(100*Math.min(1,par/Math.max(1,moves)));wkEnsure();const pv=S.wk.lv[L0]||0;S.wk.lv[L0]=Math.max(pv,pts);save();$('dP').textContent='+'+Math.max(0,pts-pv)+' pts · WEEK '+wkTotal();checkBadges(par);Board.record(L0,pts);fbPend=fbMile(L0)&&!(S.fbp&&S.fbp[L0])?L0:0}
  $('dT').textContent='💧 '+G.tg.length+'/'+G.tg.length+' TARGETS FILLED';$('dM').textContent=moves;$('dB').textContent=S.done[L0];run=false;document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id=='done'||e.id=='game'))}
 function ln(x1,y1,x2,y2,w,c){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
 function dot(r,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill()}
@@ -427,7 +451,7 @@ let delArm=0;async function accDelete(){const b=$('accDel');if(!delArm){delArm=1
 /* ---------- Online leaderboard: Firebase Anonymous Auth + Firestore (real shared data) ---------- */
 let curScr='home';
 const FB_ON=firebaseConfig.apiKey.indexOf('YOUR_')!==0&&firebaseConfig.projectId.indexOf('YOUR_')!==0;
-const FB={m:null,p:null,get(){return this.p||(this.p=(async()=>{const b='https://www.gstatic.com/firebasejs/10.12.2/',r=await Promise.all([import(b+'firebase-app.js'),import(b+'firebase-auth.js'),import(b+'firebase-firestore.js')]),app=r[0].initializeApp(firebaseConfig);this.m={app,au:r[1],fs:r[2],auth:r[1].getAuth(app),db:r[2].getFirestore(app)};return this.m})().catch(e=>{this.p=null;throw e}))}};
+const FB={m:null,p:null,get(){return this.p||(this.p=(async()=>{const b='https://www.gstatic.com/firebasejs/10.12.2/',r=await Promise.all([import(b+'firebase-app.js'),import(b+'firebase-auth.js'),import(b+'firebase-firestore.js'),import(b+'firebase-functions.js')]),app=r[0].initializeApp(firebaseConfig);this.m={app,au:r[1],fs:r[2],fn:r[3],auth:r[1].getAuth(app),db:r[2].getFirestore(app)};return this.m})().catch(e=>{this.p=null;throw e}))}};
 const WK_MS=604800000,WK_OFF=345600000,MAXSTEP=3000,TAGI={GOLD:'🥇 GOLD',SILVER:'🥈 SILVER',BRONZE:'🥉 BRONZE'},TAGS=['GOLD','SILVER','BRONZE'],HRS=[24,20,18],PLC=['🥇 1ST PLACE','🥈 2ND PLACE','🥉 3RD PLACE'];
 function wkIdx(ms){return Math.floor((ms-WK_OFF)/WK_MS)}
 function wkStart(i){return WK_OFF+i*WK_MS}
@@ -439,15 +463,17 @@ const hms=ms=>{const m=Math.max(0,Math.floor(ms/60000));return Math.floor(m/60)+
 const leftTxt=ms=>{const h=Math.max(0,Math.floor(ms/36e5));return Math.floor(h/24)+'d '+h%24+'h'};
 const tot=o=>{let t=0;for(const k in o)t+=o[k];return t};
 const pr=(l,v)=>'<div class="pr"><small>'+l+'</small><b>'+v+'</b></div>';
-const Board={on:FB_ON,m:null,user:null,skew:0,tab:'w',view:null,un:{},rows:[],mine:{w:null,a:null},rk:{w:null,a:null},winners:{},rw:null,adf:+S.adfUntil||0,err:'',loading:false,busy:0,started:'',subIdx:-1,rwShown:'',inited:0,prevLoaded:-1,
+const Board={on:FB_ON,m:null,user:null,skew:0,tab:'w',view:null,un:{},rows:[],mine:{w:null,a:null},rk:{w:null,a:null},winners:{},rw:null,adf:+S.adfUntil||0,err:'',loading:false,busy:0,started:'',subIdx:-1,rwShown:'',inited:0,
  sleep:ms=>new Promise(r=>setTimeout(r,ms)),now(){return Date.now()+this.skew},idx(){return wkIdx(this.now())},adFree(){return this.now()<this.adf},ow(){return S.ow&&S.ow.i===this.idx()?tot(S.ow.lv):0},
  boot(){if(!S.pb){S.pb={};const w=S.wk&&S.wk.lv;for(const k in w)S.pb[k]=w[k];save()}this.setBtn();if(S.pname&&this.on)setTimeout(()=>this.init(),1200);this.af()},
  setBtn(){$('pnRow').style.display=this.on?'flex':'none'},
  async init(){if(!this.on||this.inited)return;this.inited=1;try{const m=this.m=await FB.get();m.au.onAuthStateChanged(m.auth,u=>{this.user=u;if(u)this.start()})}catch(e){this.inited=0;this.err='net'}},
  async auth(){await this.init();const m=this.m||(this.m=await FB.get());if(!m.auth.currentUser)await m.au.signInAnonymously(m.auth);this.user=m.auth.currentUser;this.start();return this.user},
  sub(k,f){if(this.un[k])this.un[k]();this.un[k]=f},
- async loadPrevWinners(){const i=this.idx()-1;if(this.prevLoaded===i)return;this.prevLoaded=i;this.winners={};try{const F=this.m.fs,col=F.collection(this.m.db,'weeks',String(i),'scores');const snap=await F.getDocs(F.query(col,F.orderBy('score','desc'),F.limit(10)));const rows=snap.docs.map(d=>({uid:d.id,name:d.data().name||'Player',score:d.data().score||0,updated:d.data().updated&&d.data().updated.toMillis?d.data().updated.toMillis():0}));rows.sort((a,b)=>b.score-a.score||a.updated-b.updated||a.uid.localeCompare(b.uid));rows.slice(0,3).forEach((w,k)=>{this.winners[w.uid]=TAGS[k]});if(this.user){const me=rows.find(x=>x.uid===this.user.uid);if(me&&me.score>0){const rank=rows.filter(x=>x.score>me.score||(x.score===me.score&&x.updated<me.updated)).length+1;if(rank<=3)this.winners[this.user.uid]=TAGS[rank-1]}}this.maybeRw()}catch(e){this.err='net'}this.draw()},
- start(){const u=this.user.uid;if(this.started===u)return;this.started=u;const m=this.m,F=m.fs;this.sub('ma',F.onSnapshot(F.doc(m.db,'players',u),s=>{this.mine.a=s.exists()?s.data().best:null;this.reRank()},()=>{}));this.subWeek();this.loadPrevWinners()},
+ start(){const u=this.user.uid;if(this.started===u)return;this.started=u;const m=this.m,F=m.fs;
+  this.sub('rw',F.onSnapshot(F.doc(m.db,'rewards',u),s=>{this.rw=s.exists()?s.data():{};const a=this.rw.adFreeUntil;this.adf=a&&a.toMillis?a.toMillis():0;if(S.adfUntil!==this.adf){S.adfUntil=this.adf;save()}this.af();this.maybeRw()},()=>{}));
+  this.sub('meta',F.onSnapshot(F.doc(m.db,'meta','latest'),s=>{this.winners={};if(s.exists())(s.data().winners||[]).forEach(w=>{this.winners[w.uid]=w.tag});this.draw()},()=>{}));
+  this.sub('ma',F.onSnapshot(F.doc(m.db,'players',u),s=>{this.mine.a=s.exists()?s.data().best:null;this.reRank()},()=>{}));this.subWeek()},
  subWeek(){const m=this.m,F=m.fs,i=this.idx();this.subIdx=i;this.mine.w=null;this.sub('mw',F.onSnapshot(F.doc(m.db,'weeks',String(i),'scores',this.user.uid),s=>{this.mine.w=s.exists()?s.data().score:null;this.reRank()},()=>{}))},
  record(L,pts){const i=this.idx();if(!S.ow||S.ow.i!==i)S.ow={i,lv:{}};S.ow.lv[L]=Math.max(S.ow.lv[L]||0,pts);S.pb=S.pb||{};S.pb[L]=Math.max(S.pb[L]||0,pts);save();this.push()},
  async push(){if(!this.on||this.busy||!S.pname)return;this.busy=1;let wrote=false;try{await this.auth();const m=this.m,F=m.fs,u=this.user.uid;
@@ -465,37 +491,55 @@ const Board={on:FB_ON,m:null,user:null,skew:0,tab:'w',view:null,un:{},rows:[],mi
   this.sub('list',F.onSnapshot(F.query(col,F.orderBy(fld,'desc'),F.limit(10)),s=>{this.loading=false;this.err='';this.rows=s.docs.map(d=>({uid:d.id,name:d.data().name,score:d.data()[fld]||0}));this.draw();this.reRank()},()=>{this.loading=false;this.err='net';this.draw()}))},
  reRank(){clearTimeout(this.rtt);this.rtt=setTimeout(()=>this.calcRanks(),300)},
  async calcRanks(){const m=this.m;if(!m||!this.user||!this.view)return;const F=m.fs;for(const t of['w','a']){const my=this.mine[t];if(!my){this.rk[t]=null;continue}try{const col=t==='w'?F.collection(m.db,'weeks',String(this.idx()),'scores'):F.collection(m.db,'players'),c=await F.getCountFromServer(F.query(col,F.where(t==='w'?'score':'best','>',my)));this.rk[t]=c.data().count+1}catch(e){}}this.draw()},
- tick(){if(this.idx()!==this.subIdx){this.subWeek();this.listen();this.prevLoaded=-1;this.loadPrevWinners()}this.calcRanks();this.draw()},
+ tick(){if(this.idx()!==this.subIdx){this.subWeek();this.listen()}this.calcRanks();this.draw()},
  async open(v){this.view=v;this.err='';this.loading=true;this.draw();if(!this.on){this.err='cfg';this.loading=false;this.draw();return}
-  try{await this.auth();if(this.view!==v)return;this.listen();await this.loadPrevWinners();if(v==='pf')this.loading=false;this.calcRanks();clearInterval(this.iv);this.iv=setInterval(()=>this.tick(),20000)}catch(e){this.err='net';this.loading=false;this.draw()}},
+  try{await this.auth();if(this.view!==v)return;this.listen();if(v==='pf')this.loading=false;this.calcRanks();clearInterval(this.iv);this.iv=setInterval(()=>this.tick(),20000)}catch(e){this.err='net';this.loading=false;this.draw()}},
  close(){this.view=null;clearInterval(this.iv);if(this.un.list){this.un.list();delete this.un.list}},
  setTab(t){this.tab=t;$('tbW').classList.toggle('on',t==='w');$('tbA').classList.toggle('on',t==='a');this.rows=[];this.listen();this.draw()},
- af(){AdsManager.setBanner();clearTimeout(this.at);const ms=this.adf-this.now();if(ms>0)this.at=setTimeout(()=>this.af(),Math.min(ms+500,2147e6));$('hdot').textContent=this.adFree()?'✨':'';this.draw()},
+ af(){AdsManager.setBanner();clearTimeout(this.at);const ms=this.adf-this.now();if(ms>0)this.at=setTimeout(()=>this.af(),Math.min(ms+500,2147e6));$('hdot').textContent=(this.rw&&this.rw.pending)?'🎁':this.adFree()?'✨':'';this.draw()},
  draw(){if(this.view==='lb')this.drawLb();else if(this.view==='pf')this.drawPf()},
  drawLb(){const t=this.tab,i=this.idx();$('lbSub').textContent=t==='w'?'WEEK '+wkLabel(i)+' · ENDS IN '+leftTxt(wkStart(i+1)-this.now()):'BEST SCORES OF ALL TIME';
-  let h=this.adFree()?'<div class="card gl">🎁 AD-FREE ACTIVE<br><b>'+hms(this.adf-this.now())+' remaining</b></div>':'';$('lbRwd').innerHTML=h;
+  let h='';if(this.rw&&this.rw.pending)h='<div class="card gl" onclick="Board.showRw()">🎁 You won a weekly reward!<br><b>TAP TO CLAIM</b></div>';else if(this.adFree())h='<div class="card gl">🎁 AD-FREE ACTIVE<br><b>'+hms(this.adf-this.now())+' remaining</b></div>';$('lbRwd').innerHTML=h;
   let l;if(this.err)l='<p class="em">'+(this.err==='cfg'?'Leaderboard is not set up yet.':'Leaderboard unavailable. Please check your internet connection.')+'</p>';else if(this.loading)l='<div class="spin"></div>';else if(!this.rows.length)l='<p class="em">No players yet. Complete a level to join!</p>';
   else{const R=this.rows;l=R.map(r=>{const n=1+R.filter(x=>x.score>r.score).length,me=this.user&&r.uid===this.user.uid,tg=this.winners[r.uid];return '<div class="lr'+(me?' me':'')+'"><span class="rn">'+(n<4?['🥇','🥈','🥉'][n-1]:n)+'</span><span class="nm">'+esc(r.name||'Player')+(tg&&TAGI[tg]?'<i class="tgc">'+TAGI[tg]+'</i>':'')+'</span><b>'+fmt(r.score)+'</b></div>'}).join('')}
   $('lbList').innerHTML=l;const my=this.mine[t]!=null?this.mine[t]:(t==='w'?this.ow():tot(S.pb||{})),rk=this.rk[t];
   $('lbMe').innerHTML='<div><small>YOUR RANK</small><b>'+(rk?'#'+rk:'—')+'</b></div><div><small>YOUR SCORE</small><b>'+fmt(my)+'</b></div><div><small>YOUR NAME</small><b>'+esc(S.pname||'')+'</b></div>'},
- drawPf(){const tg=this.winners[this.user&&this.user.uid];$('pfB').innerHTML=pr('PLAYER NAME',esc(S.pname||''))+pr('BEST SCORE',fmt(this.mine.a!=null?this.mine.a:tot(S.pb||{})))+pr('CURRENT RANK',(this.rk.w?'#'+this.rk.w:'—')+' <small>this week</small> &nbsp; '+(this.rk.a?'#'+this.rk.a:'—')+' <small>all time</small>')+pr('WEEKLY TAG',tg&&TAGI[tg]?TAGI[tg]:'—')+pr('AD-FREE',this.adFree()?'🎁 '+hms(this.adf-this.now())+' remaining':'None')},
- maybeRw(){if(!this.user)return;const tg=this.winners[this.user.uid],i=this.idx(),key='aq_reward_'+i;if(!tg||localStorage.getItem(key)==='claimed')return;this.rw={pending:{week:i-1,rank:TAGS.indexOf(tg)+1,tag:tg}};if(this.rwShown!==String(i)){this.rwShown=String(i);if(curScr==='home'||curScr==='lb')this.showRw()}},
+ drawPf(){const rw=this.rw||{},tg=rw.tag;$('pfB').innerHTML=pr('PLAYER NAME',esc(S.pname||''))+pr('BEST SCORE',fmt(this.mine.a!=null?this.mine.a:tot(S.pb||{})))+pr('CURRENT RANK',(this.rk.w?'#'+this.rk.w:'—')+' <small>this week</small> &nbsp; '+(this.rk.a?'#'+this.rk.a:'—')+' <small>all time</small>')+pr('WEEKLY TAG',tg&&TAGI[tg]?TAGI[tg]:'—')+pr('AD-FREE',this.adFree()?'🎁 '+hms(this.adf-this.now())+' remaining':'None')},
+ maybeRw(){const p=this.rw&&this.rw.pending;if(p&&this.rwShown!==String(p.week)&&(curScr==='home'||curScr==='lb')){this.rwShown=String(p.week);this.showRw()}},
  showRw(){const p=this.rw&&this.rw.pending;if(!p||!(p.rank>=1&&p.rank<=3))return;const r=p.rank-1;let c='';for(let k=0;k<16;k++)c+='<span class="cfp" style="left:'+(k*6.4)+'%;animation-delay:-'+(k%7*.45)+'s">'+['🎉','✨','💧','🏆'][k%4]+'</span>';
   $('rwB').innerHTML=c+'<div class="sub">🏆 WEEKLY RESULTS</div><h1 style="font-size:30px;margin:10px 0">'+PLC[r]+'</h1><div style="font-size:22px">'+TAGI[TAGS[r]]+' TAG</div><div style="font-size:20px;margin:8px 0">'+HRS[r]+' HOURS AD-FREE</div><p style="font-size:18px">Congratulations!</p><button class="btn big" onclick="Board.claim()">CLAIM REWARD</button><button class="btn sec" style="margin-top:12px" onclick="Board.closeRw()">LATER</button>';$('rw').classList.add('on')},
  closeRw(){$('rw').classList.remove('on')},
- claim(){const p=this.rw&&this.rw.pending;if(!p)return;const i=this.idx(),key='aq_reward_'+i;if(localStorage.getItem(key)==='claimed'){this.closeRw();return}const hours=HRS[p.rank-1],until=Math.max(this.now(),+S.adfUntil||0)+hours*3600000;S.adfUntil=until;S.rewardTag=p.tag;save();localStorage.setItem(key,'claimed');this.adf=until;this.af();$('rwB').innerHTML='<h1 style="font-size:30px">🎁 AD-FREE ACTIVE</h1><div style="font-size:22px;margin:12px 0">'+hms(until-this.now())+' remaining</div><button class="btn big" onclick="Board.closeRw()">DONE</button>'}
-};
+ async claim(){try{await this.auth();const f=this.m.fn.httpsCallable(this.m.fn.getFunctions(this.m.app,FUNCTIONS_REGION),'claimReward'),r=await f(),d=r&&r.data;if(d&&d.until){this.adf=d.until;S.adfUntil=d.until;save();this.af();$('rwB').innerHTML='<h1 style="font-size:30px">🎁 AD-FREE ACTIVE</h1><div style="font-size:22px;margin:12px 0">'+hms(d.until-this.now())+' remaining</div><button class="btn big" onclick="Board.closeRw()">DONE</button>'}else this.closeRw()}catch(e){toast('Could not claim right now. Please try again.')}}};
 let nmFrom='lb';
 function openBoard(){au();if(Board.on&&!S.pname)return openName('lb');show('lb');Board.open('lb')}
 function openPf(){show('pf');Board.open('pf')}
 function openName(f){nmFrom=f||'lb';$('nmIn').value=S.pname||'';$('nmM').textContent='';show('nm')}
 function nameBack(){if(nmFrom==='set')show('set',prev=='game');else if(nmFrom==='pf')openPf();else show('home')}
 function nameGo(){const n=cleanName($('nmIn').value);if(!n){$('nmM').textContent='Please enter a name.';return}S.pname=n;save();if(nmFrom==='set'){show('set',prev=='game')}else if(nmFrom==='pf'){openPf()}else openBoard();Board.push()}
+/* ---------- Feedback & Suggestions (uses the existing Firebase app + anonymous sign-in; stored in Firestore collection "feedback") ---------- */
+let fbCatV='suggestion',fbBusy=0,fbSent=0,fbNext=null,fbCb=null,fbPend=0;
+const fbMile=L=>L===10||(L>=50&&L%50===0);
+function fbCat(c){fbCatV=c;['suggestion','bug','gameplay','general'].forEach(k=>$('fc_'+k).classList.toggle('on',k===c))}
+function openFb(next){fbNext=typeof next==='function'?next:null;fbSent=0;fbBusy=0;$('fbM').value='';$('fbS').textContent='';$('fbN').textContent=S.pname||'Player';$('fbBtn').disabled=false;$('fbBtn').textContent='Submit Feedback';fbCat('suggestion');show('fbk')}
+function fbBack(){if(fbNext){const c=fbNext;fbNext=null;c()}else show('set',prev=='game')}
+function fbEdit(){if(fbSent&&!fbBusy){fbSent=0;$('fbBtn').disabled=false;$('fbBtn').textContent='Submit Feedback';$('fbS').textContent=''}}
+async function fbSend(cat,msg){if(!Board.on)throw{code:'cfg'};await Board.auth();const m=Board.m,F=m.fs,id='fb_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+ await F.setDoc(F.doc(m.db,'feedback',id),{id,uid:Board.user.uid,name:S.pname||'Player',category:cat,message:msg,level:S.cur||1,score:tot(S.pb||{}),createdAt:F.serverTimestamp()});return id}
+async function fbSubmit(){if(fbBusy||fbSent)return;const msg=$('fbM').value.trim().slice(0,1000);if(!msg){$('fbS').textContent='Please enter your feedback first.';return}
+ fbBusy=1;$('fbBtn').disabled=true;$('fbS').textContent='Sending…';
+ try{await fbSend(fbCatV,msg);fbSent=1;S.fbT=Date.now();save();$('fbM').value='';$('fbS').textContent='Thanks! Your feedback helps us improve Aqualine. ❤️';$('fbBtn').textContent='Sent ✓'}
+ catch(e){$('fbBtn').disabled=false;$('fbS').textContent=(e&&e.code==='cfg')?'Feedback is not available right now. Please try again later.':'Could not send. Please check your internet connection and try again.'}
+ finally{fbBusy=0}}
+/* milestone popup: Level 10, 50, 100, then every 50. Shown once per milestone, only when the result screen is being left (never during play). */
+function fbGate(cb){const L=fbPend;fbPend=0;if(!L||!fbMile(L)||(S.fbp&&S.fbp[L])||tutOn){cb();return}
+ S.fbp=S.fbp||{};S.fbp[L]=1;save();if(S.fbT&&Date.now()-S.fbT<864e5){cb();return}fbCb=cb;$('fbp').classList.add('on')}
+function fbPopupLater(){$('fbp').classList.remove('on');const c=fbCb;fbCb=null;if(c)c()}
+function fbPopupShare(){$('fbp').classList.remove('on');const c=fbCb;fbCb=null;openFb(c)}
 /* ---------- In-app legal pages ---------- */
 const PRIVACY_POLICY_URL="YOUR_PRIVACY_POLICY_URL_HERE",APP_VERSION='1.0',CONTACT='[Developer Contact Email]';
 const DOCS={
 privacy:['Privacy Policy',()=>'<p>Effective date: 24 October 2026</p><p>This policy explains how the Aqualine game (“Aqualine”, “the game”) handles information. Please read it in simple terms below.</p>'+
-'<h3>1. Information stored on your device</h3><p>Aqualine saves your progress (levels completed, best moves, current level, weekly points and badges), your settings (sound, music, vibration) and whether you finished the tutorial. This is stored locally on your device. It is not sent to us unless you create an optional account: then your email address and a copy of your progress are also stored online by Google Firebase (Authentication and Firestore) so you can restore it on another device. You can log out or delete your account in Settings, which deletes the online copy. If you use the online leaderboard, the display name you choose (shown publicly to other players), your scores, weekly reward status and an anonymous ID are stored online by Google Firebase. Clearing the app’s data or uninstalling the game removes it.</p>'+
+'<h3>1. Information stored on your device</h3><p>Aqualine saves your progress (levels completed, best moves, current level, weekly points and badges), your settings (sound, music, vibration) and whether you finished the tutorial. This is stored locally on your device. It is not sent to us unless you create an optional account: then your email address and a copy of your progress are also stored online by Google Firebase (Authentication and Firestore) so you can restore it on another device. You can log out or delete your account in Settings, which deletes the online copy. If you use the online leaderboard, the display name you choose (shown publicly to other players), your scores, weekly reward status and an anonymous ID are stored online by Google Firebase. If you send feedback, your message, display name, category, current level and score, and an anonymous ID are stored online by Google Firebase and are only visible to the developer. Clearing the app’s data or uninstalling the game removes it.</p>'+
 '<h3>2. Information processed for advertising</h3><p>Aqualine shows ads using Google AdMob, a third-party advertising service provided by Google. When ads are loaded or shown, Google and its partners may process information such as your device’s advertising ID, IP address, device and app information (model, operating system, language), approximate location derived from the IP address, and how you interact with ads. This is used to deliver, measure and limit ads, to prevent fraud and, where allowed and enabled, to personalise ads. We do not control how Google processes this data; please see Google’s own privacy information for details.</p>'+
 '<h3>3. Usage statistics (analytics)</h3><p>Aqualine uses Firebase Analytics, a service provided by Google, to understand how the game is used so we can improve it. It records simple events such as opening the app, starting or finishing the tutorial, starting or completing a level (with the level number and move count), and using a hint. Firebase may also process an app instance identifier, device and app information (model, operating system, app version, language) and approximate location from the IP address. We do not ask for your name, email or phone number for this. You can turn this off at any time in Settings under Usage statistics.</p><h3>4. Rewarded advertisements</h3><p>Rewarded ads are optional. You only see one if you choose to watch it, for example to get a free hint. Watching or skipping a rewarded ad never affects your ability to play. The same advertising information described above may be processed when a rewarded ad is loaded or shown.</p>'+
 '<h3>5. Third-party services</h3><p>Besides Google AdMob, ad networks and partners connected through Google may take part in showing ads. They have their own privacy policies.</p>'+
